@@ -1,0 +1,220 @@
+public final class AccuWeatherAPI {
+
+    public final List<Map<String, Object>> getWeather(String ciudad) {
+		return Arrays.asList(new HashMap<String, Object>(){{
+			put("DateTime", "2019-05-03T01:00:00-03:00");
+			put("EpochDateTime", 1556856000);
+			put("WeatherIcon", 33);
+			put("IconPhrase", "Clear");
+			put("IsDaylight", false);
+			put("PrecipitationProbability", 0);
+			put("MobileLink", "http://m.accuweather.com/en/ar/villa-vil/7984/");
+			put("Link", "http://www.accuweather.com/en/ar/villa-vil/7984");
+			put("Temperature", new HashMap<String, Object>(){{
+				put("Value", 57);
+				put("Unit", "F");
+				put("UnitType", 18);
+			}});
+		}});
+	}
+}
+
+class Atuendo {
+    private Prenda calzado;
+    private Prenda parteInferior;
+    private Prenda parteSuperior;
+    private List<Prenda> accesorios;
+}
+
+class Ropero {
+    List<Prenda> prendas;
+
+    public void addAListaPrendas(Prenda prenda) {
+        prendas.add(prenda);
+    }
+
+    public filtrarPorCategoriaYTemperatura(Categoria categoria, Integer temperatura){
+        return prendas.filter(prenda -> prenda.categoria == categoria && prenda.temperatura < temperatura);
+    }
+
+    sugerencia(Integer temperatura){
+        return new Atuendo(
+            prendas.filtrarPorCategoriaYTemperatura(CALZADO, temperatura).random(),
+            prendas.filtrarPorCategoriaYTemperatura(PARTE_INFERIOR, temperatura).random(),
+            prendas.filtrarPorCategoriaYTemperatura(PARTE_SUPERIOR, temperatura).random(),
+            prendas.filtrarPorCategoriaYTemperatura(ACCESORIO, temperatura).random()
+        )
+    }
+}
+
+class Color {
+    private int red;
+    private int green;
+    private int blue;
+
+    Color(int red; int green; int blue) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+    }
+}
+
+class TipoDePrenda(){
+    Categoria categoria;
+
+    public TipoDePrenda(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public categoria() {
+        return this.categoria;
+    }
+
+    constant ZAPATO = new TipoDePrenda(CALZADO)
+    constant REMERA = new TipoDePrenda(PARTE_SUPERIOR)
+    constant PANTALON = new TipoDePrenda(PARTE_INFERIOR)
+}
+
+enum Trama {
+    LISA,
+    RAYADA,
+    LUNARES,
+    CUADROS,
+    ESTAMPADO
+}
+
+class Prenda {
+    private Categoria categoria;
+    private Tipo tipoPrenda;
+    private String tela;
+    private Color colorPrimario;
+    private Color colorSecundario;
+    private Trama tramaTela = Trama.LISA;
+    private Integer temperatura;
+
+    Prenda(Tipo tipo, String tela, Color colorP, Color colorS, Trama trama, Integer temperatura) {
+        this.tipoPrenda = tipo;
+        this.tela = tela;
+        this.colorPrimario = colorP;
+        this.colorSecundario = colorS;
+        this.trama = trama;
+        this.temperatura = temperatura;
+    }
+
+    public setTrama(Trama trama) {
+        this. tramaTela = trama;
+    }
+
+    public setColorS(Color colorS) {
+        this.colorSecundario = colorS;
+    }
+}
+
+class Borrador {
+    private TipoDePrenda tipoPrenda;
+    private String tela;
+    private Color colorPrimario;
+    private Color colorSecundario;
+    private Trama tramaTela = Trama.LISA;
+    private Integer temperatura;
+
+    public especificarTipo(Tipo){
+        this.tipoPrenda = tipo;
+        return this;
+    }
+
+    public especificarTela(Tela) {
+        if(!tipo.materialesConsistentes().contains(tela)){
+            throw new tipoYMaterialNoConsistenteException();
+        }
+        this.tela = tela;
+        return this;
+    }
+
+    public especificarColorPrimario(Color){
+        this.colorPrimario = colorP;
+        return this;
+    }
+
+    public especificarColorSecundario(Color){
+        this.colorSecundario = colorS;
+        return this;
+    }
+
+    public especificarTrama(Trama){
+        if(trama != NULL){
+            this.tramaTela = trama;
+        }
+        return this;
+    }
+
+    public especificarTemperatura(Integer){
+        this.tem-peratura = temperatura;
+        return this;
+    }
+
+    public crearPrenda() {
+        return new Prenda(tipoPrenda, tela, colorPrimario, colorSecundario, tramaTela, temperatura);
+    }
+}
+
+enum Categoria {
+    CALZADO,
+    PARTE_INFERIOR,
+    PARTE_SUPERIOR,
+    ACCESORIO
+}
+
+class Usuario {
+    private Atuendo atuendo;
+    private Ropero ropero;
+    private contadorAPI;
+    private ultimaConsulta;
+    
+    Usuario(){
+        this.ropero = new Ropero();
+    }
+
+    public void cargarPrendaARopero(Categoria categoria, TipoDePrenda tipo, Tela tela, Color colorP, Trama trama) {
+        if(tipo.categoria() != categoria){
+            throw new TipoNoEsCategoriaException();
+        }
+
+        Prenda prenda = new Borrador()
+                            .especificarTipo(Tipo)
+                            .especificarTela(Tela)
+                            .especificarColorPrimario(colorP)
+                            .especificarColorSecundario(colorS)
+                            .especificarTrama(trama)
+                            .especificarTemperatura(temperatura);
+                            .crearPrenda();
+
+        ropero.cargarPrenda(prenda);
+    }
+
+    public controlarUsosDiarios() {
+        if(ultimaConsulta.get(0).get("DateTime).isAfter(LocalDate.now()) || ultimaConsulta == null){
+            contadorAPI = 0;
+        } else {
+            contadorAPI++;
+        }
+    }
+
+    public getTemperaturaDe(String lugar) {
+        if(contadorAPI <= 10){
+        AccuWeatherAPI apiClima = new AccuWeatherAPI();
+        List<Map<String, Object>> condicionesClimaticas = apiClima.getWeather(lugar);
+        
+        ultimaConsulta = condicionesClimaticas;
+
+        return condicionesClimaticas.get(0).get('Temperature').get('Value');
+        } else {
+            thrown new MaximoUsosDiariosGratisExcepcion();
+        }
+    }
+
+    public sugerenciaPrenda(String lugar){
+        controlarUsosDiarios();
+        this.atuendo = ropero.sugerencia(getTemperaturaDe(lugar));
+    }
+}
